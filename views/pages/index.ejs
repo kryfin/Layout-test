@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="/css/style.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<script type='text/javascript' src='./js/function.js'></script>
+
+<body>
+<div id="main" class="clear">
+ 
+	
+  <div id="sidebar"> 
+
+<ul>
+  <li><a id="myLink">Option</a></li>
+	</ul>
+  </div>
+<div id="page-wrap" onclick="closeNav()">
+<table id="myTableId">
+<tbody>
+<% options.forEach(function(option){ %>
+
+   <tr>
+  <td><%= option.name %></td><br/>
+   	</tr>
+<% }) %>
+	</tbody>   
+	</table>
+
+<div class="pagination">
+  <a class="previous">❮</a>
+  <a class="next">❯</a>
+<input type="hidden" id="hdnActivePage" value="1">
+
+</div>
+  </div>  
+
+
+  
+
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="dropdown">
+  <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <a id="optionA">A</a>
+    <a id="optionB">B</a>
+  </div>
+</div>
+</div> 
+
+</body>
+</html>
+
+
+
+
+<script >
+
+var A = [
+        { name: 'List A1'},
+        { name: 'List A2'},
+        { name: 'List A3' },
+        { name: 'List A4'},
+        { name: 'List A5'},
+        { name: 'List A6' },
+    ];
+ var B = [
+        { name: 'List B1'},
+        { name: 'List B2'},
+        { name: 'List B3' },
+        { name: 'List B4'},
+        { name: 'List B5'},
+        { name: 'List B6' },
+    ];
+	$('a#myLink').click(function(){ openNav(); });
+ 	
+	
+
+
+ 	$('a#optionA').click(function(){ 
+ 	$('#myTableId').empty();
+        
+        var html="";
+        for (var i = 0; i< A.length; i++) {
+
+		$("#myTableId").append("<tr><td>" + A[i].name + "</td></tr>");
+        }
+
+
+    });
+
+ 	$('a#optionB').click(function(){
+ 	$('#myTableId').empty();
+        
+        var html="";
+        for (var i = 0; i< A.length; i++) {
+
+		$("#myTableId").append("<tr><td>" + B[i].name + "</td></tr>");
+        }
+ 		 });
+ 		
+	
+
+
+$(document).ready(function () {
+var pageSize = 3;
+	$("#hdnActivePage").val(1);
+var numberOfPages = $('table tr').length / pageSize;
+numberOfPages = numberOfPages.toFixed();
+
+
+$("a.next").on('click', function () {
+$("table tr:nth-child(-n+" + (($("#hdnActivePage").val() * pageSize) + pageSize) + ")").show();
+$("table tr:nth-child(-n+" + $("#hdnActivePage").val() * pageSize + ")").hide();
+var currentPage = Number($("#hdnActivePage").val());
+$("#hdnActivePage").val(Number($("#hdnActivePage").val()) + 1);
+if ($("#hdnActivePage").val() != "1") {
+$("a.previous").show();
+$("span").show();
+}
+if ($("#hdnActivePage").val() == numberOfPages) {
+}
+});
+$("a.previous").on('click', function () {
+var currentPage = Number($("#hdnActivePage").val());
+$("#hdnActivePage").val(currentPage - 1);
+$("table tr").hide();
+$("table tr:nth-child(-n+" + ($("#hdnActivePage").val() * pageSize) + ")").show();
+$("table tr:nth-child(-n+" + (($("#hdnActivePage").val() * pageSize) - pageSize) + ")").hide();
+if ($("#hdnActivePage").val() == "1") {
+
+}
+if ($("#hdnActivePage").val() < numberOfPages) {
+$("a.next").show();
+$("span").show();
+}
+if ($("#hdnActivePage").val() == 1) {
+$("span").hide();
+}
+
+});
+
+});
+
+
+
+
+</script>
+
